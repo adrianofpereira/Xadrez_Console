@@ -2,6 +2,7 @@
 using System.Xml.Schema;
 using Xadrez_Console.tabuleiro;
 using xadrez;
+using Xadrez_Console.xadrez;
 
 
 namespace Xadrez_Console
@@ -10,24 +11,26 @@ namespace Xadrez_Console
     {
         static void Main(string[] Args)
         {
-            //PosicaoXadrez pos = new PosicaoXadrez('a', 1);
-
-            //Console.WriteLine(pos);
-
-            //Console.WriteLine(pos.toPosicao());
-
-            //Console.ReadLine();
+            
 
             try
             {
-                Tabuleiro tab = new Tabuleiro(8, 8);
+                PartidaDeXadrez partida = new PartidaDeXadrez();
 
-                tab.colocarPeca(new Torre(tab, Cor.Preta), new Posicao(0, 0));
-                tab.colocarPeca(new Torre(tab, Cor.Preta), new Posicao(1, 3));
-                tab.colocarPeca(new Rei(tab, Cor.Preta), new Posicao(0, 2));
-                tab.colocarPeca(new Torre(tab, Cor.Branca), new Posicao(3, 5));
+                while (!partida.terminada)
+                {
+                    Console.Clear();
+                    Tela.imprimirTabuleiro(partida.tab);
 
-                Tela.imprimirTabuleiro(tab);
+                    Console.Write("Origem: ");
+                    Posicao origem = Tela.LerPosicaoXadrez().toPosicao();
+                    Console.Write("Detino: ");
+                    Posicao destino = Tela.LerPosicaoXadrez().toPosicao();
+
+                    partida.executaMoviemnto(origem, destino);  
+                }
+                
+                
             }
             catch (TabuleiroException e)
             {
